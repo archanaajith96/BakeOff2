@@ -144,8 +144,8 @@ void draw() {
     
     // draw a triangle at (x2, y2)
     pushMatrix();
-    translate(bx, by);
-    float a = atan2(t.x + screenTransX, t.y - screenTransY);
+    translate(width/2, height/2);
+    float a = atan2(bx- (width/2), (height/2) - by);
     rotate(a);
     line(0, 0, -10, -10);
     line(0, 0, 10, -10);
