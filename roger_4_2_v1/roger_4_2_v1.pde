@@ -168,6 +168,7 @@ void newScaffoldControlLogic()
   
   //tranlate
   if (checkForLocation() == false) {
+    translated = false;
     fill(124, 252, 0);
     text("move the square", width / 2 - 200, inchesToPixels(1.0f));
   } else {
@@ -175,6 +176,7 @@ void newScaffoldControlLogic()
   }
   //rotate
   if (checkForRotation() == false) {
+    rotated = false;
     fill(124, 252, 0);
     text("rotate", width / 2 - 250, inchesToPixels(1.5f));
     fill(255, 255, 0);
@@ -183,9 +185,10 @@ void newScaffoldControlLogic()
     rotated = true;
   }
   fill(255, 255, 0);
-  text("CW", width / 2, inchesToPixels(1.5f));
+  text("CW", width / 2 + 200, inchesToPixels(1.5f));
   //resize
   if (checkForSize() == false) {
+    resized = false;
     fill(124, 252, 0);
     text("rescale by drag", width / 2 - 210, inchesToPixels(2.0f));
     fill(255, 255, 0);
@@ -211,7 +214,7 @@ void newScaffoldControlLogic()
 
   //upper right corner, rotate clockwise
   //text("CW", width / 2 + inchesToPixels(2.5f), inchesToPixels(1.8f));
-  if (mousePressed && dist( width / 2, inchesToPixels(1.5f), mouseX, mouseY)<inchesToPixels(.5f))
+  if (mousePressed && dist( width / 2 + 200, inchesToPixels(1.5f), mouseX, mouseY)<inchesToPixels(.5f))
     screenRotation++;
 
   //lower left corner, decrease Z
@@ -224,44 +227,26 @@ void newScaffoldControlLogic()
   if (mousePressed && dist(width / 2 + 80, inchesToPixels(2.0f), mouseX, mouseY)<inchesToPixels(.5f))
     screenZ+=inchesToPixels(.02f);
 
-  //left middle, move left
-  //text("left", inchesToPixels(.2f), height/2);
-  if (mousePressed && dist(width / 2 - inchesToPixels(1.5f), inchesToPixels(2.75f), mouseX, mouseY)<inchesToPixels(.5f))
-    screenTransX-=inchesToPixels(.01f);
-
-  //text("right", width-inchesToPixels(.2f), height/2);
-  if (mousePressed && dist(width / 2 + inchesToPixels(1.5f), inchesToPixels(2.75f), mouseX, mouseY)<inchesToPixels(.5f))
-    screenTransX+=inchesToPixels(.01f);
-  
-  //text("up", width/2, inchesToPixels(.2f));
-  if (mousePressed && dist(width/2, inchesToPixels(2f), mouseX, mouseY)<inchesToPixels(.5f))
-    screenTransY-=inchesToPixels(.01f);
-  
-  //text("down", width/2, height-inchesToPixels(.2f));
-  if (mousePressed && dist(width/2, inchesToPixels(3.5f), mouseX, mouseY)<inchesToPixels(.5f))
-    screenTransY+=inchesToPixels(.01f);
   // go to the next step
   if (mousePressed && dist(width/2 + 200, height / 2, mouseX, mouseY)<inchesToPixels(.5f))
     {
     if (translated == true && rotated == true && resized == true) {
+      if (userDone==false && !checkForSuccess()) {
+        errorCount++;
+      }
+      trialIndex++;
+      screenTransX = 0;
+      screenTransY = 0;
       translated = false;
       rotated = false;
       resized = false;
+      if (trialIndex==trialCount && userDone==false)
+      {
+        userDone = true;
+        finishTime = millis();
+      }
     }
-    if (userDone==false && !checkForSuccess())
-      errorCount++;
-
-    //and move on to next trial
-    trialIndex++;
-
-    screenTransX = 0;
-    screenTransY = 0;
-
-    if (trialIndex==trialCount && userDone==false)
-    {
-      userDone = true;
-      finishTime = millis();
-    }
+    
   }
 }
 
