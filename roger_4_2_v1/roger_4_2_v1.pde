@@ -339,34 +339,34 @@ void mouseDragged() {
 }
 
 
-void mouseReleased()
-{
+//void mouseReleased()
+//{
   
-  //check to see if user clicked middle of screen
-  if (dist(width/2, height/2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
-  {
-    if (userDone==false && !checkForSuccess())
-      errorCount++;
+//  //check to see if user clicked middle of screen
+//  if (dist(width/2, height/2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
+//  {
+//    if (userDone==false && !checkForSuccess())
+//      errorCount++;
 
-    //and move on to next trial
-    trialIndex++;
+//    //and move on to next trial
+//    trialIndex++;
 
-    screenTransX = 0;
-    screenTransY = 0;
+//    screenTransX = 0;
+//    screenTransY = 0;
 
-    if (trialIndex==trialCount && userDone==false)
-    {
-      userDone = true;
-      finishTime = millis();
-    }
-  }
+//    if (trialIndex==trialCount && userDone==false)
+//    {
+//      userDone = true;
+//      finishTime = millis();
+//    }
+//  }
   
-  if (dragged){
-    dragged = false;
-    locked = false;
-  }
+//  if (dragged){
+//    dragged = false;
+//    locked = false;
+//  }
   
-}
+//}
 
 public boolean checkForLocation()
 {
