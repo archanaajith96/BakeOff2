@@ -16,6 +16,7 @@ float yOffsetTrans = 0;
 float xOffsetResize = 0;
 float yOffsetResize = 0;
 float radius = inchesToPixels(.15f);
+float cnt =0;
 
 int trialCount = 8; //this will be set higher for the bakeoff
 float border = 0; //have some padding from the sides
@@ -94,8 +95,9 @@ void draw() {
   Target t = targets.get(trialIndex);
   
   
-   boolean onCircle = dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius);
+   //boolean onCircle = dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius);
   
+   boolean onCircle = (sqrt(2)*(t.z/2))-radius <= dist(bx,by,mouseX,mouseY) && dist(bx,by,mouseX,mouseY) <= (sqrt(2)*(t.z/2))+radius;  
   
   //dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius) && 
   //dist(bx,by,mouseX,mouseY)<=inchesToPixels((sqrt(2)*(t.z/2))+radius)
@@ -106,18 +108,27 @@ void draw() {
       mouseY > by-bs && mouseY < by+bs) {
     overBoxTrans = true;  
     if(!locked) { 
-      strokeWeight(2);
+      strokeWeight(3);
       stroke(255); 
       fill(153);
     } 
-  } else if (onCircle) {
+  } 
+  else{
+    overBoxTrans = false;
+  }
+  if (onCircle) {
     overBoxResize = true;  
     if(!locked) { 
-      strokeWeight(2);
+      strokeWeight(3);
       stroke(255); 
       fill(153);
     } 
-  } else {
+  }
+  else{
+    overBoxResize = false;
+  }
+  
+  if (!overBoxResize && !overBoxTrans){
     strokeWeight(2);
     stroke(153);
     fill(153);
@@ -126,6 +137,8 @@ void draw() {
   }
   
   //println("overBoxResize: "+overBoxResize);
+  //println("testCnt"+cnt);
+  //cnt++;
   //println("mouseX: "+mouseX+" mouseY: "+mouseY);
 
   
@@ -147,6 +160,9 @@ void draw() {
   fill(255,255,0);
   ellipse(0, 0, radius, radius);
   noFill();
+  if (locked){
+    strokeWeight(3);
+  }
   ellipse(0, 0, sqrt(2)*(t.z), sqrt(2)*(t.z));
   popMatrix();
 
@@ -327,13 +343,26 @@ void mousePressed()
     }
     if(overBoxTrans) { 
     locked = true; 
+    
     fill(255, 255, 255);
-    } else {
+    } 
+    else if (overBoxResize){
+      locked = true;
+    }
+    else {
       locked = false;
     }
     xOffsetTrans = mouseX - bx; 
     yOffsetTrans = mouseY - by; 
     
+    //println("Locked: "+locked);
+    //println("overBoxResize: "+overBoxResize);
+    //println("overBoxTrans: "+overBoxTrans);
+    //if (overBoxResize){
+    //  locked = true;
+    //}
+    //else{
+    //}
     
 }
 
@@ -343,12 +372,19 @@ void mouseDragged() {
     t = targets.get(trialIndex);
   }
   
-  if(locked && trialIndex<trialCount) {
+  if(locked && trialIndex<trialCount && overBoxTrans) {
     dragged = true;
     bx = mouseX-xOffsetTrans; 
     by = mouseY-yOffsetTrans;
     screenTransX = bx - (width/2 + t.x);
     screenTransY = by - (height/2 + t.y);
+  }
+  
+  if(locked && trialIndex<trialCount && overBoxResize) {
+    strokeWeight(6);
+    dragged = true;
+    t.z = (2* (dist(bx, by, mouseX, mouseY)))/sqrt(2);
+    
   }
 }
 
@@ -375,11 +411,10 @@ void mouseReleased()
   //  }
   //}
   
-  if (dragged){
-    dragged = false;
-    locked = false;
-  }
+  dragged = false;
+  locked = false;
   
+  //println("Locked: "+locked);
 }
 
 public boolean checkForLocation()
