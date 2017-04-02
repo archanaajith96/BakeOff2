@@ -93,7 +93,7 @@ void draw() {
   Target t = targets.get(trialIndex);
   
   
-  boolean onCircle = dist(-bx,-by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius);
+  boolean onCircle = dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius);
   
   
   //dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius) && 
@@ -126,7 +126,7 @@ void draw() {
     overBoxTrans = false;
   }
   
-  //println("overBoxResize: "+overBoxResize);
+  println("overBoxResize: "+overBoxResize);
   //println("mouseX: "+mouseX+" mouseY: "+mouseY);
 
   
@@ -197,11 +197,11 @@ void newScaffoldControlLogic()
   textSize(32);
   fill(255, 255, 0);
   //tranlate
-  //text("1. move the square to center", width / 2, inchesToPixels(1.5f));
-  //text("left", width / 2 - inchesToPixels(1.5f), inchesToPixels(2.75f));
-  //text("right", width / 2 + inchesToPixels(1.5f), inchesToPixels(2.75f));
-  //text("up", width/2, inchesToPixels(2f));
-  //text("down", width/2, inchesToPixels(3.5f));
+  text("1. move the square to center", width / 2, inchesToPixels(1.5f));
+  text("left", width / 2 - inchesToPixels(1.5f), inchesToPixels(2.75f));
+  text("right", width / 2 + inchesToPixels(1.5f), inchesToPixels(2.75f));
+  text("up", width/2, inchesToPixels(2f));
+  text("down", width/2, inchesToPixels(3.5f));
   if (checkForLocation() == true) {
     translated = true;
     strokeWeight(5);
@@ -257,22 +257,22 @@ void newScaffoldControlLogic()
   if (mousePressed && dist(width / 2 + 80, inchesToPixels(8.0f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
     screenZ+=inchesToPixels(.02f);
 
-//  //left middle, move left
-//  //text("left", inchesToPixels(.2f), height/2);
-//  if (mousePressed && dist(width / 2 - inchesToPixels(1.5f), inchesToPixels(2.75f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
-//    screenTransX-=inchesToPixels(.01f);
+  //left middle, move left
+  //text("left", inchesToPixels(.2f), height/2);
+  if (mousePressed && dist(width / 2 - inchesToPixels(1.5f), inchesToPixels(2.75f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
+    screenTransX-=inchesToPixels(.01f);
 
-//  //text("right", width-inchesToPixels(.2f), height/2);
-//  if (mousePressed && dist(width / 2 + inchesToPixels(1.5f), inchesToPixels(2.75f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
-//    screenTransX+=inchesToPixels(.01f);
+  //text("right", width-inchesToPixels(.2f), height/2);
+  if (mousePressed && dist(width / 2 + inchesToPixels(1.5f), inchesToPixels(2.75f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
+    screenTransX+=inchesToPixels(.01f);
   
-//  //text("up", width/2, inchesToPixels(.2f));
-//  if (mousePressed && dist(width/2, inchesToPixels(2f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
-//    screenTransY-=inchesToPixels(.01f);
+  //text("up", width/2, inchesToPixels(.2f));
+  if (mousePressed && dist(width/2, inchesToPixels(2f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
+    screenTransY-=inchesToPixels(.01f);
   
-//  //text("down", width/2, height-inchesToPixels(.2f));
-//  if (mousePressed && dist(width/2, inchesToPixels(3.5f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
-//    screenTransY+=inchesToPixels(.01f);
+  //text("down", width/2, height-inchesToPixels(.2f));
+  if (mousePressed && dist(width/2, inchesToPixels(3.5f), mouseX, mouseY)<inchesToPixels(.5f) && !locked)
+    screenTransY+=inchesToPixels(.01f);
 }
 
 //my example design
