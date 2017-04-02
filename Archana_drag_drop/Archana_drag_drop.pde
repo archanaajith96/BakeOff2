@@ -25,6 +25,8 @@ boolean userDone = false;
 boolean overBox = false;
 boolean locked = false;
 boolean dragged = false;
+boolean translated = false;
+boolean rotated = false;
 
 final int screenPPI = 72; //what is the DPI of the screen you are using 
 
@@ -92,10 +94,12 @@ void draw() {
       mouseY > by-bs && mouseY < by+bs) {
     overBox = true;  
     if(!locked) { 
+      strokeWeight(2);
       stroke(255); 
       fill(153);
     } 
   } else {
+    strokeWeight(2);
     stroke(153);
     fill(153);
     overBox = false;
@@ -133,23 +137,27 @@ void draw() {
 
 
   
-
-  //make a line btw the target and targetting
-  stroke(0, 255, 0);
-  line(bx, by, width/2, height/2);
-  
-  // draw a triangle at (x2, y2)
-  pushMatrix();
-  translate(bx, by);
-  float a = atan2(t.x + screenTransX, t.y - screenTransY);
-  rotate(a);
-  line(0, 0, -10, -10);
-  line(0, 0, 10, -10);
-  popMatrix();
+  if (!translated){
+    //make a line btw the target and targetting
+    stroke(0, 255, 0);
+    line(bx, by, width/2, height/2);
+    
+    // draw a triangle at (x2, y2)
+    pushMatrix();
+    translate(bx, by);
+    float a = atan2(t.x + screenTransX, t.y - screenTransY);
+    rotate(a);
+    line(0, 0, -10, -10);
+    line(0, 0, 10, -10);
+    popMatrix();
+  }
   newScaffoldControlLogic(); //you are going to want to replace this!
   
   text("Trial " + (trialIndex+1) + " of " +trialCount, width/2, inchesToPixels(.5f));
 }
+
+
+  //===========MODIFIED SCAFFOLD DESIGN=================
 
 void newScaffoldControlLogic()
 {
@@ -163,18 +171,28 @@ void newScaffoldControlLogic()
   text("up", width/2, inchesToPixels(2f));
   text("down", width/2, inchesToPixels(3.5f));
   if (checkForLocation() == true) {
-    
-    strokeWeight(10);
+    translated = true;
+    strokeWeight(5);
     line(width / 2 - 300, inchesToPixels(1.4f), width / 2 + 300, inchesToPixels(1.4f));
+  }
+  else{
+    translated = false;
   }
   //rotate
   text("2. rotate the square", width / 2 - 200, inchesToPixels(6.5f));
     //text("CCW", width / 2 + inchesToPixels(2f), inchesToPixels(1.8f));
   text("CW", width / 2, inchesToPixels(6.5f));
-  text(degreeDif(), width / 2 + inchesToPixels(3f), inchesToPixels(6.5f));
+  if (!rotated){
+    text(degreeDif(), width / 2 + inchesToPixels(3f), inchesToPixels(6.5f));
+  }
+  
   if (checkForRotation() == true) {
-    strokeWeight(10);
+    rotated = true;
+    strokeWeight(5);
     line(width / 2 - 400, inchesToPixels(6.4f), width / 2 + 400, inchesToPixels(6.4f));
+  }
+  else{
+    rotated = false;
   }
   //rescale
   text("3. rescale the square", width / 2 - 200, inchesToPixels(8.0f));
@@ -182,7 +200,7 @@ void newScaffoldControlLogic()
   text("+", width / 2 + 80, inchesToPixels(8.0f));
   text(sizeDif(), width / 2 + inchesToPixels(3f), inchesToPixels(8.0f));
   if (checkForSize() == true) {
-    strokeWeight(10);
+    strokeWeight(5);
     line(width / 2 - 400, inchesToPixels(7.9f), width / 2 + 400, inchesToPixels(7.9f));
   }
   
