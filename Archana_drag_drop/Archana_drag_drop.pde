@@ -46,7 +46,7 @@ float inchesToPixels(float inch)
 }
 
 void setup() {
-  size(800,800); 
+  size(700,700); 
 
   rectMode(CENTER);
   textFont(createFont("Arial", inchesToPixels(.2f))); //sets the font to Arial that is .3" tall
