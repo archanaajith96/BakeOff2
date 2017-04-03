@@ -273,12 +273,15 @@ void newScaffoldControlLogic()
     textSize(32);
     fill(255, 0, 0);
     text("next", width / 2 + 200, height / 2);
+  } else {
+    textSize(32);
+    fill(220, 220, 220);
+    text("next", width / 2 + 200, height / 2);
   }
-  
   
   //upper left corner, rotate counterclockwise
   //text("CCW", width / 2 + inchesToPixels(2f), inchesToPixels(1.8f));
-  if (mousePressed && dist(width / 2 + 100, inchesToPixels(1.5f), mouseX, mouseY)<inchesToPixels(.5f))
+  if (mousePressed && dist(width / 2 + 100, inchesToPixels(1.5f), mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
     screenRotation--;
 
   //upper right corner, rotate clockwise
