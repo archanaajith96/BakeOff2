@@ -303,26 +303,26 @@ void newScaffoldControlLogic()
     //screenZ+=inchesToPixels(.02f);
 
   // go to the next step
-  if (mousePressed && dist(width/2 + 200, height / 2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
-    {
-    if (translated == true && rotated == true && resized == true) {
-      if (userDone==false && !checkForSuccess()) {
-        errorCount++;
-      }
-      trialIndex++;
-      screenTransX = 0;
-      screenTransY = 0;
-      translated = false;
-      rotated = false;
-      resized = false;
-      if (trialIndex==trialCount && userDone==false)
-      {
-        userDone = true;
-        finishTime = millis();
-      }
-    }
+  //if (mousePressed && dist(width/2 + 200, height / 2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
+  //  {
+  //  if (translated == true && rotated == true && resized == true) {
+  //    if (userDone==false && !checkForSuccess()) {
+  //      errorCount++;
+  //    }
+  //    trialIndex++;
+  //    screenTransX = 0;
+  //    screenTransY = 0;
+  //    translated = false;
+  //    rotated = false;
+  //    resized = false;
+  //    if (trialIndex==trialCount && userDone==false)
+  //    {
+  //      userDone = true;
+  //      finishTime = millis();
+  //    }
+  //  }
     
-  }
+  //}
 }
 
 //my example design
@@ -426,27 +426,27 @@ void mouseReleased()
 {
   
   ////check to see if user clicked middle of screen
-  //if (dist(width/2, height/2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
-  //{
-  //  if (userDone==false && !checkForSuccess())
-  //    errorCount++;
+  if (dist(width/2 + 200, height / 2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
+  {
+    if (userDone==false && !checkForSuccess())
+      errorCount++;
 
-  //  //and move on to next trial
-  //  trialIndex++;
+    //and move on to next trial
+    trialIndex++;
 
-  //  screenTransX = 0;
-  //  screenTransY = 0;
+    screenTransX = 0;
+    screenTransY = 0;
 
-  //  if (trialIndex==trialCount && userDone==false)
-  //  {
-  //    userDone = true;
-  //    finishTime = millis();
-  //  }
-  //}
-  
-  dragged = false;
-  locked = false;
-  
+    if (trialIndex==trialCount && userDone==false)
+    {
+      userDone = true;
+      finishTime = millis();
+    }
+  }
+  if (dragged){
+    dragged = false;
+    locked = false;
+  }
   //println("Locked: "+locked);
 }
 
