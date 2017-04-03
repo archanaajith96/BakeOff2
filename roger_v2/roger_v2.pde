@@ -153,8 +153,13 @@ void draw() {
   translate(screenTransX, screenTransY); //center the drawing coordinates to the center of the screen
 
   rotate(radians(t.rotation));
-
-  fill(255, 0, 0); //set color to semi translucent
+  
+  //fill(255, 0, 0); //set color to semi translucent
+  if (resized == true) {
+    fill(255, 128, 0);
+  } else {
+    fill(255,0,0);
+  }
   rect(0, 0, t.z, t.z);
   float radius = inchesToPixels(.15f);
   fill(255,255,0);
@@ -271,7 +276,11 @@ void newScaffoldControlLogic()
   //proceed
   if (translated == true && rotated == true && resized == true) {
     textSize(32);
+<<<<<<< HEAD
     stroke(124, 252, 0);
+=======
+    fill(124, 252, 0);
+>>>>>>> 98e843521e73f38de6fa5c740bafd1a7bbcd41bf
     text("next", width / 2 + 200, height / 2);
   } else {
     textSize(32);
