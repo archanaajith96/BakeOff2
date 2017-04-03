@@ -102,7 +102,7 @@ void draw() {
   //dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius) && 
   //dist(bx,by,mouseX,mouseY)<=inchesToPixels((sqrt(2)*(t.z/2))+radius)
   bx = width/2 + t.x + screenTransX;
-  bs = t.z/2;
+  bs = t.z/4;
   by = height/2 + t.y + screenTransY;
   if (mouseX > bx-bs && mouseX < bx+bs && 
       mouseY > by-bs && mouseY < by+bs) {
@@ -153,8 +153,13 @@ void draw() {
   translate(screenTransX, screenTransY); //center the drawing coordinates to the center of the screen
 
   rotate(radians(t.rotation));
-
-  fill(255, 0, 0); //set color to semi translucent
+  
+  //fill(255, 0, 0); //set color to semi translucent
+  if (resized == true) {
+    fill(124, 252, 0);
+  } else {
+    fill(255,0,0);
+  }
   rect(0, 0, t.z, t.z);
   float radius = inchesToPixels(.15f);
   fill(255,255,0);
@@ -271,7 +276,7 @@ void newScaffoldControlLogic()
   //proceed
   if (translated == true && rotated == true && resized == true) {
     textSize(32);
-    fill(255, 0, 0);
+    fill(124, 252, 0);
     text("next", width / 2 + 200, height / 2);
   } else {
     textSize(32);
