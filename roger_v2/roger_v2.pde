@@ -223,19 +223,23 @@ void newScaffoldControlLogic()
   fill(124, 252, 0);
   text("rotate", width / 2 - 250, inchesToPixels(1.5f));
   //indicator highlight
-  if (degreeDif() > 45) {
+  if (rotated == false) {
+   if (degreeDif() > 45) {
     strokeWeight(5);
     stroke(255, 0, 0);
     line(width / 2 + 80, inchesToPixels(1.6f), width / 2 + 120, inchesToPixels(1.6f));
-  } else {
+   } else {
     strokeWeight(5);
     stroke(255, 0, 0);
     line(width / 2 + 180, inchesToPixels(1.6f), width / 2 + 220, inchesToPixels(1.6f));
   }
+  }
   if (checkForRotation() == false) {
     rotated = false;
     fill(255, 255, 0);
-    text(degreeDif(), width / 2 - 100, inchesToPixels(1.5f));
+    //text(degreeDif(), width / 2 - 100, inchesToPixels(1.5f));
+    text((int)(90 - degreeDif()), width / 2 + 150, inchesToPixels(1.5f));
+    text((int)degreeDif(), width / 2 +250, inchesToPixels(1.5f));
   } else {
     rotated = true;
     strokeWeight(5);
@@ -243,9 +247,10 @@ void newScaffoldControlLogic()
     line(width / 2 - 280, inchesToPixels(1.4f), width / 2 - 100, inchesToPixels(1.4f));
   }
   fill(255, 255, 0);
-  text("CW", width / 2 + 200, inchesToPixels(1.5f));
-  fill(255, 255, 0);
   text("CCW", width / 2 + 100, inchesToPixels(1.5f));
+  fill(255, 255, 0);
+  text("CW", width / 2 + 200, inchesToPixels(1.5f));
+  
   //resize
   fill(124, 252, 0);
   text("rescale by drag", width / 2 - 210, inchesToPixels(2.0f));
