@@ -222,6 +222,16 @@ void newScaffoldControlLogic()
   //rotate
   fill(124, 252, 0);
   text("rotate", width / 2 - 250, inchesToPixels(1.5f));
+  //indicator highlight
+  if (degreeDif() > 45) {
+    strokeWeight(5);
+    stroke(255, 0, 0);
+    line(width / 2 + 80, inchesToPixels(1.6f), width / 2 + 120, inchesToPixels(1.6f));
+  } else {
+    strokeWeight(5);
+    stroke(255, 0, 0);
+    line(width / 2 + 180, inchesToPixels(1.6f), width / 2 + 220, inchesToPixels(1.6f));
+  }
   if (checkForRotation() == false) {
     rotated = false;
     fill(255, 255, 0);
@@ -460,7 +470,7 @@ public float sizeDif()
 public float degreeDif() 
 {
   Target t = targets.get(trialIndex);
-  double tmp = calculateDifferenceBetweenAngles(t.rotation,screenRotation);
+  double tmp = calculateAngles(t.rotation,screenRotation);
   return (float)tmp;
 } 
 
@@ -488,4 +498,15 @@ double calculateDifferenceBetweenAngles(float a1, float a2)
         return 90-diff;
       else
         return diff;
+ }
+ 
+double calculateAngles(float a1, float a2)
+  {
+     double diff=abs(a1-a2);
+      diff%=90;
+      //if (diff>45)
+      //  return 90-diff;
+      //else
+      //  return diff;
+      return diff;
  }
