@@ -219,11 +219,11 @@ void newScaffoldControlLogic()
   if (rotated == false) {
    if (degreeDif() > 45) {
     strokeWeight(5);
-    stroke(255, 0, 0);
+    stroke(124, 252, 0);
     line(width / 2 + 80, inchesToPixels(1.6f), width / 2 + 120, inchesToPixels(1.6f));
    } else {
     strokeWeight(5);
-    stroke(255, 0, 0);
+    stroke(124, 252, 0);
     line(width / 2 + 180, inchesToPixels(1.6f), width / 2 + 220, inchesToPixels(1.6f));
   }
   }
@@ -251,7 +251,7 @@ void newScaffoldControlLogic()
     resized = false;
     
     fill(255, 255, 0);
-    text(sizeDif(), width / 2 - 100, inchesToPixels(2.0f));
+    text((int)sizeDif(), width / 2 - 100, inchesToPixels(2.0f));
     if (sizeDif() > 0) {
       fill(255, 0, 0);
       text("be SMALLER", width / 2, inchesToPixels(2.0f));
@@ -277,6 +277,10 @@ void newScaffoldControlLogic()
     fill(220, 220, 220);
     text("next", width / 2 + 200, height / 2);
   }
+  //rec around button
+  noFill();
+  stroke(153);
+  rect(width / 2 + 200, height / 2 - 10, 70, 40);
   
   //upper left corner, rotate counterclockwise
   //text("CCW", width / 2 + inchesToPixels(2f), inchesToPixels(1.8f));
