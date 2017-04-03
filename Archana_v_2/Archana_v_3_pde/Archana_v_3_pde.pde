@@ -17,6 +17,8 @@ float xOffsetResize = 0;
 float yOffsetResize = 0;
 float radius = inchesToPixels(.15f);
 float cnt =0;
+float prevMouseX = 0;
+float prevMouseY = 0;
 
 int trialCount = 8; //this will be set higher for the bakeoff
 float border = 0; //have some padding from the sides
@@ -104,7 +106,7 @@ void draw() {
   bx = width/2 + t.x + screenTransX;
   bs = t.z/4;
   by = height/2 + t.y + screenTransY;
-  if (mouseX > bx-bs && mouseX < bx+bs && 
+  if (mouseX > bx-bs && mouseX < bx+bs &&
       mouseY > by-bs && mouseY < by+bs) {
     overBoxTrans = true;  
       strokeWeight(2.5);
@@ -377,7 +379,8 @@ void mousePressed()
     }
     xOffsetTrans = mouseX - bx; 
     yOffsetTrans = mouseY - by; 
-    
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
     //println("Locked: "+locked);
     //println("overBoxResize: "+overBoxResize);
     //println("overBoxTrans: "+overBoxTrans);
@@ -407,7 +410,10 @@ void mouseDragged() {
     strokeWeight(6);
     dragged = true;
     t.z = (2* (dist(bx, by, mouseX, mouseY)))/sqrt(2);
-    
+    float newAngle = atan2(mouseY - prevMouseY, prevMouseX - mouseX );
+    t.rotation = t.rotation + newAngle;
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
   }
 }
 
