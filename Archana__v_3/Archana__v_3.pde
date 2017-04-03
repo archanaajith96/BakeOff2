@@ -19,6 +19,7 @@ float radius = inchesToPixels(.15f);
 float cnt =0;
 float prevMouseX = 0;
 float prevMouseY = 0;
+float oldRotation = 0;
 
 int trialCount = 8; //this will be set higher for the bakeoff
 float border = 0; //have some padding from the sides
@@ -30,7 +31,6 @@ int finishTime = 0; //records the time of the final click
 boolean userDone = false;
 boolean overBoxTrans = false;
 boolean overBoxResize = false;
-boolean overBoxRotate = false;
 boolean locked = false;
 boolean dragged = false;
 boolean translated = false;
@@ -101,8 +101,7 @@ void draw() {
    //boolean onCircle = dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius);
   
    boolean onCircle = (sqrt(2)*(t.z/2))-radius <= dist(bx,by,mouseX,mouseY) && dist(bx,by,mouseX,mouseY) <= (sqrt(2)*(t.z/2))+radius;  
-   boolean onBig = 2 * (sqrt(2)*(t.z/2))-radius <= dist(bx,by,mouseX,mouseY) && dist(bx,by,mouseX,mouseY) <= 2 * (sqrt(2)*(t.z/2))+radius;
-   
+  
   //dist(bx,by,mouseX,mouseY)>=inchesToPixels((sqrt(2)*(t.z/2))-radius) && 
   //dist(bx,by,mouseX,mouseY)<=inchesToPixels((sqrt(2)*(t.z/2))+radius)
   bx = width/2 + t.x + screenTransX;
@@ -135,11 +134,7 @@ void draw() {
     overBoxResize = false;
     overBoxTrans = false;
   }
-  if (onBig) {
-    overBoxRotate = true;
-  } else {
-    overBoxRotate = false;
-  }
+  
   //println("overBoxResize: "+overBoxResize);
   //println("testCnt"+cnt);
   //cnt++;
@@ -157,13 +152,7 @@ void draw() {
   translate(screenTransX, screenTransY); //center the drawing coordinates to the center of the screen
 
   rotate(radians(t.rotation));
-  
-  fill(255,255,0);
-  line(0, 0, t.z, -t.z);
-  line(0, 0, t.z, t.z);
-  line(0, 0, -t.z, t.z);
-  line(0, 0, -t.z, -t.z);
-  
+
   fill(255, 0, 0); //set color to semi translucent
   rect(0, 0, t.z, t.z);
   float radius = inchesToPixels(.15f);
@@ -267,10 +256,10 @@ void newScaffoldControlLogic()
     fill(255, 255, 0);
     text((int)sizeDif(), width / 2 - 100, inchesToPixels(2.0f));
     if (sizeDif() > 0) {
-      fill(255, 0, 0);
+      fill(124, 252, 0);
       text("make SMALLER", width / 2, inchesToPixels(2.0f));
     } else {
-      fill(255, 0, 0);
+      fill(124, 252, 0);
       text("make BIGGER", width / 2, inchesToPixels(2.0f));
     }
   } else {
@@ -391,14 +380,17 @@ void mousePressed()
       startTime = millis();
       println("time started!");
     }
+    Target t = null;
+    if (trialIndex<trialCount && !dragged){
+      t = targets.get(trialIndex);
+      oldRotation = t.rotation;
+    }
     if(overBoxTrans) { 
     locked = true; 
     
     fill(255, 255, 255);
     } 
     else if (overBoxResize){
-      locked = true;
-    } else if (overBoxRotate) {
       locked = true;
     }
     else {
@@ -408,6 +400,8 @@ void mousePressed()
     yOffsetTrans = mouseY - by; 
     prevMouseX = mouseX;
     prevMouseY = mouseY;
+    
+    
     //println("Locked: "+locked);
     //println("overBoxResize: "+overBoxResize);
     //println("overBoxTrans: "+overBoxTrans);
@@ -437,17 +431,17 @@ void mouseDragged() {
     strokeWeight(6);
     dragged = true;
     t.z = (2* (dist(bx, by, mouseX, mouseY)))/sqrt(2);
-    //float newAngle = atan2(mouseY - prevMouseY, prevMouseX - mouseX );
-    //t.rotation = t.rotation + newAngle;
-    prevMouseX = mouseX;
-    prevMouseY = mouseY;
-  }
-  if(locked && trialIndex<trialCount && overBoxRotate) {
-    strokeWeight(6);
-    dragged = true;
-    //t.z = (2* (dist(bx, by, mouseX, mouseY)))/sqrt(2);
     float newAngle = atan2(mouseY - prevMouseY, prevMouseX - mouseX );
+    //float oldAngle = atan2(by - prevMouseY, prevMouseX - bx);
+    //float newAngle = atan2(by - mouseY, mouseX - bx);
     t.rotation = t.rotation + newAngle;
+    //t.rotation = oldRotation + (oldAngle + newAngle);
+    //println("newAngle: "+newAngle);
+    //println("oldAngle: "+oldAngle);
+    //println("oldRotation: "+oldRotation);
+    //println("diff: "+(oldAngle + newAngle));
+    
+    //oldRotation = t.rotation;
     prevMouseX = mouseX;
     prevMouseY = mouseY;
   }
