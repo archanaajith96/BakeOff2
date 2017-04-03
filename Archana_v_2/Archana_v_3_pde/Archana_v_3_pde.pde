@@ -19,6 +19,7 @@ float radius = inchesToPixels(.15f);
 float cnt =0;
 float prevMouseX = 0;
 float prevMouseY = 0;
+float oldRotation = 0;
 
 int trialCount = 8; //this will be set higher for the bakeoff
 float border = 0; //have some padding from the sides
@@ -381,6 +382,11 @@ void mousePressed()
     yOffsetTrans = mouseY - by; 
     prevMouseX = mouseX;
     prevMouseY = mouseY;
+    Target t = null;
+    if (trialIndex<trialCount){
+      t = targets.get(trialIndex);
+      oldRotation = t.rotation;
+    }
     //println("Locked: "+locked);
     //println("overBoxResize: "+overBoxResize);
     //println("overBoxTrans: "+overBoxTrans);
@@ -410,8 +416,10 @@ void mouseDragged() {
     strokeWeight(6);
     dragged = true;
     t.z = (2* (dist(bx, by, mouseX, mouseY)))/sqrt(2);
-    float newAngle = atan2(mouseY - prevMouseY, prevMouseX - mouseX );
-    t.rotation = t.rotation + newAngle;
+    //float newAngle = atan2(mouseY - prevMouseY, prevMouseX - mouseX );
+    float oldAngle = atan2(prevMouseY - by, prevMouseX - bx);
+    float newAngle = atan2(mouseY - by, mouseX - bx);
+    t.rotation = t.rotation + (oldAngle + newAngle);
     prevMouseX = mouseX;
     prevMouseY = mouseY;
   }
@@ -420,25 +428,6 @@ void mouseDragged() {
 
 void mouseReleased()
 {
-  
-  ////check to see if user clicked middle of screen
-  //if (dist(width/2, height/2, mouseX, mouseY)<inchesToPixels(.5f) && !dragged)
-  //{
-  //  if (userDone==false && !checkForSuccess())
-  //    errorCount++;
-
-  //  //and move on to next trial
-  //  trialIndex++;
-
-  //  screenTransX = 0;
-  //  screenTransY = 0;
-
-  //  if (trialIndex==trialCount && userDone==false)
-  //  {
-  //    userDone = true;
-  //    finishTime = millis();
-  //  }
-  //}
   
   dragged = false;
   locked = false;
