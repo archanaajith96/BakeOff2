@@ -156,7 +156,7 @@ void draw() {
   
   //fill(255, 0, 0); //set color to semi translucent
   if (resized == true) {
-    fill(124, 252, 0);
+    fill(255, 128, 0);
   } else {
     fill(255,0,0);
   }
