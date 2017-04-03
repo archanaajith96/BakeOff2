@@ -107,22 +107,18 @@ void draw() {
   if (mouseX > bx-bs && mouseX < bx+bs && 
       mouseY > by-bs && mouseY < by+bs) {
     overBoxTrans = true;  
-    if(!locked) { 
-      strokeWeight(3);
+      strokeWeight(2.5);
       stroke(255); 
       fill(153);
-    } 
   } 
   else{
     overBoxTrans = false;
   }
   if (onCircle) {
     overBoxResize = true;  
-    if(!locked) { 
-      strokeWeight(3);
+      strokeWeight(2.5);
       stroke(255); 
-      fill(153);
-    } 
+      fill(153); 
   }
   else{
     overBoxResize = false;
@@ -160,9 +156,6 @@ void draw() {
   fill(255,255,0);
   ellipse(0, 0, radius, radius);
   noFill();
-  if (locked){
-    strokeWeight(3);
-  }
   ellipse(0, 0, sqrt(2)*(t.z), sqrt(2)*(t.z));
   popMatrix();
 
